@@ -33,7 +33,7 @@
 
                     /** Build up event filters */
                     var toggleLinksSelector = 'a[href="#' + panel.id + '"]';
-                    app.eventFilters.push();
+                    app.eventFilters.push(toggleLinksSelector);
 
                     /** Cache tabs */
                     app.tabs['$' + panel.id] = $(panel);
@@ -58,7 +58,7 @@
                 var $newPanel = app.tabs['$' + id],
                     $currenPanel = app.$tabScope.find('.' + app.options.panelClass + '.' + app.options.panelActiveClass);
 
-                if(!$newPanel.not($currenPanel)){
+                if($newPanel.not($currenPanel)){
                     app.removeActiveStates();
                     $currenPanel.addClass(app.options.panelAnimatingClass);
                     /** A Delay can be added to help with animation. AnimationEnd event might be a better alternative here*/
@@ -70,6 +70,7 @@
                 }
             },
             attachEventListeners: function(){
+
                 app.$tabScope.on('click', app.eventFilters.join(','), function(event){
                     event.preventDefault();
                     app.togglePanels(this.hash.substr(1));
